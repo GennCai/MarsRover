@@ -6,6 +6,10 @@ import lombok.Setter;
 @Setter
 @Getter
 public class MarsRover {
+    public static void main(String[] args) {
+
+    }
+
     private Direction direction;
     private Position position;
 
@@ -14,8 +18,22 @@ public class MarsRover {
         this.direction = direction;
     }
 
-    public static void main(String[] args) {
-
+    public Position move() {
+        switch (direction){
+            case NORTH:
+                position.setY(position.getY() + 1);
+                break;
+            case SOUTH:
+                position.setY(position.getY() - 1);
+                break;
+            case EAST:
+                position.setX(position.getX() + 1);
+                break;
+            case WEST:
+                position.setX(position.getX() - 1);
+                break;
+        }
+        return position;
     }
 
     @Getter
