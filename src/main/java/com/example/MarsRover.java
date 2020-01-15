@@ -5,33 +5,35 @@ import lombok.Getter;
 @Getter
 public class MarsRover {
     public static void main(String[] args) {
-
+        MarsRover northRover = new MarsRover( new RoverState(3, 5, Direction.NORTH));
+        System.out.println(northRover.getState());
+        northRover.move();
+        System.out.println(northRover.getState());
     }
 
-    private Direction direction;
-    private Position position;
+    private final RoverState state;
 
-    public MarsRover(Position position, Direction direction) {
-        this.position = position;
-        this.direction = direction;
+    public MarsRover(RoverState state) {
+        this.state = state;
     }
 
-    public Position move() {
-        switch (direction){
+    public RoverState move() {
+        Position position = state.getPosition();
+        switch (state.getDirection()){
             case NORTH:
-                position.y = position.y + 1;
+                state.updatePositionY(position.getY() + 1);
                 break;
             case SOUTH:
-                position.y = position.y - 1;
+                state.updatePositionY(position.getY() - 1);
                 break;
             case EAST:
-                position.x = position.x + 1;
+                state.updatePositionX(position.getX() + 1);
                 break;
             case WEST:
-                position.x = position.x - 1;
+                state.updatePositionX(position.getX() - 1);
                 break;
         }
-        return position;
+        return state;
     }
 
     @Getter
@@ -40,12 +42,32 @@ public class MarsRover {
         private Direction direction;
 
         public RoverState(int x, int y, Direction direction){
-            new RoverState(new Position(x, y), direction);
+             this(new Position(x, y), direction);
         }
 
         public RoverState(Position position, Direction direction){
             this.position = position;
             this.direction = direction;
+        }
+
+        public RoverState updateDirection(Direction direction){
+            this.direction = direction;
+            return this;
+        }
+
+        public RoverState updatePosition(Position position){
+            this.position = position;
+            return this;
+        }
+
+        public RoverState updatePositionX(int x){
+            this.position.x = x;
+            return this;
+        }
+
+        public RoverState updatePositionY(int y){
+            this.position.y = y;
+            return this;
         }
 
         @Override
