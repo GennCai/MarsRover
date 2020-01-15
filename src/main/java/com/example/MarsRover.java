@@ -1,9 +1,7 @@
 package com.example;
 
 import lombok.Getter;
-import lombok.Setter;
 
-@Setter
 @Getter
 public class MarsRover {
     public static void main(String[] args) {
@@ -21,23 +19,22 @@ public class MarsRover {
     public Position move() {
         switch (direction){
             case NORTH:
-                position.setY(position.getY() + 1);
+                position.y = position.y + 1;
                 break;
             case SOUTH:
-                position.setY(position.getY() - 1);
+                position.y = position.y - 1;
                 break;
             case EAST:
-                position.setX(position.getX() + 1);
+                position.x = position.x + 1;
                 break;
             case WEST:
-                position.setX(position.getX() - 1);
+                position.x = position.x - 1;
                 break;
         }
         return position;
     }
 
     @Getter
-    @Setter
     public static class Position {
         private int x;
         private int y;
@@ -51,17 +48,14 @@ public class MarsRover {
         public boolean equals(Object otherPosition) {
             if(otherPosition instanceof Position){
                 Position other = (Position) otherPosition;
-                return x == other.getX() && y == other.getY();
+                return x == other.x && y == other.y;
             }
             return false;
         }
 
         @Override
         public String toString() {
-            return "Position{" +
-                    "x=" + x +
-                    ", y=" + y +
-                    '}';
+            return "{x=" + x + ", y=" + y + "}";
         }
     }
 
