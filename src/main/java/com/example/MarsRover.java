@@ -35,6 +35,38 @@ public class MarsRover {
     }
 
     @Getter
+    public static class RoverState {
+        private Position position;
+        private Direction direction;
+
+        public RoverState(int x, int y, Direction direction){
+            new RoverState(new Position(x, y), direction);
+        }
+
+        public RoverState(Position position, Direction direction){
+            this.position = position;
+            this.direction = direction;
+        }
+
+        @Override
+        public boolean equals(Object otherState) {
+            if(otherState instanceof RoverState){
+                RoverState other = (RoverState) otherState;
+                return position.equals(other.getPosition()) && direction.equals(other.getDirection());
+            }
+            return false;
+        }
+
+        @Override
+        public String toString() {
+            return "RoverState{" +
+                    "position=" + position +
+                    ", direction=" + direction +
+                    '}';
+        }
+    }
+
+    @Getter
     public static class Position {
         private int x;
         private int y;
