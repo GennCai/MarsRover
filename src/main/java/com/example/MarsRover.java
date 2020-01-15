@@ -36,6 +36,42 @@ public class MarsRover {
         return state;
     }
 
+    public RoverState turnRight() {
+        switch (state.getDirection()){
+            case NORTH:
+                state.updateDirection(Direction.EAST);
+                break;
+            case SOUTH:
+                state.updateDirection(Direction.WEST);
+                break;
+            case EAST:
+                state.updateDirection(Direction.SOUTH);
+                break;
+            case WEST:
+                state.updateDirection(Direction.NORTH);
+                break;
+        }
+        return state;
+    }
+
+    public RoverState turnLeft() {
+        switch (state.getDirection()){
+            case NORTH:
+                state.updateDirection(Direction.WEST);
+                break;
+            case SOUTH:
+                state.updateDirection(Direction.EAST);
+                break;
+            case EAST:
+                state.updateDirection(Direction.NORTH);
+                break;
+            case WEST:
+                state.updateDirection(Direction.SOUTH);
+                break;
+        }
+        return state;
+    }
+
     @Getter
     public static class RoverState {
         private Position position;
