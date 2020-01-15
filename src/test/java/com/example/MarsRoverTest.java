@@ -10,7 +10,7 @@ import static com.example.MarsRover.RoverState;
 public class MarsRoverTest {
     
     @Test
-    public void should_init_position_and_direction() {
+    public void construct_test() {
         MarsRover marsRover = new MarsRover( new RoverState(3, 5, Direction.SOUTH));
         Assert.assertEquals(new RoverState(3, 5, Direction.SOUTH), marsRover.getState());
     }
@@ -66,4 +66,33 @@ public class MarsRoverTest {
         Assert.assertEquals(Direction.EAST, sRoverState.getDirection());
     }
 
+    @Test
+    public void move_straight_line_test() {
+        MarsRover marsRover;
+        RoverState roverState;
+
+        marsRover = new MarsRover(new RoverState(3, 5, Direction.SOUTH));
+
+        marsRover.clearRecords();
+        roverState = marsRover.moveTo(new Position(3, 3));
+        Assert.assertEquals(new RoverState(3, 3, Direction.SOUTH), roverState);
+        Assert.assertEquals("MM", marsRover.printRecords());
+
+        marsRover.clearRecords();
+        roverState = marsRover.moveTo(new Position(3, 5));
+        Assert.assertEquals(new RoverState(3, 5, Direction.NORTH), roverState);
+        Assert.assertEquals("RRMM", marsRover.printRecords());
+
+        marsRover = new MarsRover(new RoverState(3, 5, Direction.WEST));
+
+        marsRover.clearRecords();
+        roverState = marsRover.moveTo(new Position(6, 5));
+        Assert.assertEquals(new RoverState(6, 5, Direction.EAST), roverState);
+        Assert.assertEquals("RRMMM", marsRover.printRecords());
+
+        marsRover.clearRecords();
+        roverState = marsRover.moveTo(new Position(7, 5));
+        Assert.assertEquals(new RoverState(7, 5, Direction.EAST), roverState);
+        Assert.assertEquals("M", marsRover.printRecords());
+    }
 }

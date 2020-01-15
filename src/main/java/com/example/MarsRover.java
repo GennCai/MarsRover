@@ -1,25 +1,32 @@
 package com.example;
 
+import com.sun.deploy.util.StringUtils;
 import lombok.Getter;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Getter
 public class MarsRover {
     public static void main(String[] args) {
-        MarsRover northRover = new MarsRover( new RoverState(3, 5, Direction.NORTH));
+        MarsRover northRover = new MarsRover(new RoverState(3, 5, Direction.NORTH));
         System.out.println(northRover.getState());
         northRover.move();
         System.out.println(northRover.getState());
     }
 
     private final RoverState state;
+    private final List<String> records = new ArrayList<String>();
 
     public MarsRover(RoverState state) {
         this.state = state;
     }
 
+
     public RoverState move() {
         Position position = state.getPosition();
-        switch (state.getDirection()){
+        switch (state.getDirection()) {
             case NORTH:
                 state.updatePositionY(position.getY() + 1);
                 break;
@@ -33,11 +40,12 @@ public class MarsRover {
                 state.updatePositionX(position.getX() - 1);
                 break;
         }
+        records.add("M");
         return state;
     }
 
     public RoverState turnRight() {
-        switch (state.getDirection()){
+        switch (state.getDirection()) {
             case NORTH:
                 state.updateDirection(Direction.EAST);
                 break;
@@ -51,11 +59,12 @@ public class MarsRover {
                 state.updateDirection(Direction.NORTH);
                 break;
         }
+        records.add("R");
         return state;
     }
 
     public RoverState turnLeft() {
-        switch (state.getDirection()){
+        switch (state.getDirection()) {
             case NORTH:
                 state.updateDirection(Direction.WEST);
                 break;
@@ -67,6 +76,60 @@ public class MarsRover {
                 break;
             case WEST:
                 state.updateDirection(Direction.SOUTH);
+                break;
+        }
+        records.add("L");
+        return state;
+    }
+
+    public void clearRecords() {
+        records.clear();
+    }
+
+    public String printRecords() {
+        return StringUtils.join(records, "");
+    }
+
+    public void continueMove(int time) {
+
+        for (int i = 0; i < time; i++) {
+            move();
+        }
+    }
+
+    public void turnBack() {
+        turnRight();
+        turnRight();
+    }
+
+    public RoverState moveTo(Position targetPosition) {
+        Position currentPosition = state.getPosition();
+        int deltaPositionX = targetPosition.getX() - currentPosition.getX();
+        int deltaPositionY = targetPosition.getY() - currentPosition.getY();
+        switch (state.getDirection()) {
+            case NORTH:
+                if (deltaPositionY < 0) {
+                    turnBack();
+                }
+                continueMove(Math.abs(deltaPositionY));
+                break;
+            case SOUTH:
+                if (deltaPositionY > 0) {
+                    turnBack();
+                }
+                continueMove(Math.abs(deltaPositionY));
+                break;
+            case EAST:
+                if (deltaPositionX < 0) {
+                    turnBack();
+                }
+                continueMove(Math.abs(deltaPositionX));
+                break;
+            case WEST:
+                if (deltaPositionX > 0) {
+                    turnBack();
+                }
+                continueMove(Math.abs(deltaPositionX));
                 break;
         }
         return state;
@@ -77,38 +140,38 @@ public class MarsRover {
         private Position position;
         private Direction direction;
 
-        public RoverState(int x, int y, Direction direction){
-             this(new Position(x, y), direction);
+        public RoverState(int x, int y, Direction direction) {
+            this(new Position(x, y), direction);
         }
 
-        public RoverState(Position position, Direction direction){
+        public RoverState(Position position, Direction direction) {
             this.position = position;
             this.direction = direction;
         }
 
-        public RoverState updateDirection(Direction direction){
+        public RoverState updateDirection(Direction direction) {
             this.direction = direction;
             return this;
         }
 
-        public RoverState updatePosition(Position position){
+        public RoverState updatePosition(Position position) {
             this.position = position;
             return this;
         }
 
-        public RoverState updatePositionX(int x){
+        public RoverState updatePositionX(int x) {
             this.position.x = x;
             return this;
         }
 
-        public RoverState updatePositionY(int y){
+        public RoverState updatePositionY(int y) {
             this.position.y = y;
             return this;
         }
 
         @Override
         public boolean equals(Object otherState) {
-            if(otherState instanceof RoverState){
+            if (otherState instanceof RoverState) {
                 RoverState other = (RoverState) otherState;
                 return position.equals(other.getPosition()) && direction.equals(other.getDirection());
             }
@@ -136,7 +199,7 @@ public class MarsRover {
 
         @Override
         public boolean equals(Object otherPosition) {
-            if(otherPosition instanceof Position){
+            if (otherPosition instanceof Position) {
                 Position other = (Position) otherPosition;
                 return x == other.x && y == other.y;
             }
