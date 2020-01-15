@@ -49,8 +49,19 @@ public class MarsRover {
 
         @Override
         public boolean equals(Object otherPosition) {
-            Position other = (Position) otherPosition;
-            return x == other.getX() && y == other.getY();
+            if(otherPosition instanceof Position){
+                Position other = (Position) otherPosition;
+                return x == other.getX() && y == other.getY();
+            }
+            return false;
+        }
+
+        @Override
+        public String toString() {
+            return "Position{" +
+                    "x=" + x +
+                    ", y=" + y +
+                    '}';
         }
     }
 
