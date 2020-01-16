@@ -17,7 +17,7 @@ public class MarsRover {
     }
 
     private final RoverState state;
-    private final List<String> records = new ArrayList<String>();
+    private final List<String> instruction = new ArrayList<String>();
 
     public MarsRover(RoverState state) {
         this.state = state;
@@ -25,6 +25,7 @@ public class MarsRover {
 
 
     public RoverState move() {
+        instruction.add("M");
         Position position = state.getPosition();
         switch (state.getDirection()) {
             case NORTH:
@@ -40,11 +41,11 @@ public class MarsRover {
                 state.updatePositionX(position.getX() - 1);
                 break;
         }
-        records.add("M");
         return state;
     }
 
     public RoverState turnRight() {
+        instruction.add("R");
         switch (state.getDirection()) {
             case NORTH:
                 state.updateDirection(Direction.EAST);
@@ -59,11 +60,11 @@ public class MarsRover {
                 state.updateDirection(Direction.NORTH);
                 break;
         }
-        records.add("R");
         return state;
     }
 
     public RoverState turnLeft() {
+        instruction.add("L");
         switch (state.getDirection()) {
             case NORTH:
                 state.updateDirection(Direction.WEST);
@@ -78,16 +79,15 @@ public class MarsRover {
                 state.updateDirection(Direction.SOUTH);
                 break;
         }
-        records.add("L");
         return state;
     }
 
-    public void clearRecords() {
-        records.clear();
+    public void clearInstructions() {
+        instruction.clear();
     }
 
-    public String printRecords() {
-        return StringUtils.join(records, "");
+    public String showInstructions() {
+        return StringUtils.join(instruction, "");
     }
 
     public void continueMove(int time) {

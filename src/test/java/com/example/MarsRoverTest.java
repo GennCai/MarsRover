@@ -73,26 +73,26 @@ public class MarsRoverTest {
 
         marsRover = new MarsRover(new RoverState(3, 5, Direction.SOUTH));
 
-        marsRover.clearRecords();
+        marsRover.clearInstructions();
         roverState = marsRover.moveTo(new Position(3, 3));
         Assert.assertEquals(new RoverState(3, 3, Direction.SOUTH), roverState);
-        Assert.assertEquals("MM", marsRover.printRecords());
+        Assert.assertEquals("MM", marsRover.showInstructions());
 
-        marsRover.clearRecords();
+        marsRover.clearInstructions();
         roverState = marsRover.moveTo(new Position(3, 5));
         Assert.assertEquals(new RoverState(3, 5, Direction.NORTH), roverState);
-        Assert.assertEquals("RRMM", marsRover.printRecords());
+        Assert.assertEquals("RRMM", marsRover.showInstructions());
 
         marsRover = new MarsRover(new RoverState(3, 5, Direction.WEST));
 
-        marsRover.clearRecords();
+        marsRover.clearInstructions();
         roverState = marsRover.moveTo(new Position(6, 5));
         Assert.assertEquals(new RoverState(6, 5, Direction.EAST), roverState);
-        Assert.assertEquals("RRMMM", marsRover.printRecords());
+        Assert.assertEquals("RRMMM", marsRover.showInstructions());
 
-        marsRover.clearRecords();
+        marsRover.clearInstructions();
         roverState = marsRover.moveTo(new Position(7, 5));
         Assert.assertEquals(new RoverState(7, 5, Direction.EAST), roverState);
-        Assert.assertEquals("M", marsRover.printRecords());
+        Assert.assertEquals("M", marsRover.showInstructions());
     }
 }
