@@ -91,7 +91,6 @@ public class MarsRover {
     }
 
     public void continueMove(int time) {
-
         for (int i = 0; i < time; i++) {
             move();
         }
@@ -100,39 +99,6 @@ public class MarsRover {
     public void turnBack() {
         turnRight();
         turnRight();
-    }
-
-    public RoverState moveTo(Position targetPosition) {
-        Position currentPosition = state.getPosition();
-        int deltaPositionX = targetPosition.getX() - currentPosition.getX();
-        int deltaPositionY = targetPosition.getY() - currentPosition.getY();
-        switch (state.getDirection()) {
-            case NORTH:
-                if (deltaPositionY < 0) {
-                    turnBack();
-                }
-                continueMove(Math.abs(deltaPositionY));
-                break;
-            case SOUTH:
-                if (deltaPositionY > 0) {
-                    turnBack();
-                }
-                continueMove(Math.abs(deltaPositionY));
-                break;
-            case EAST:
-                if (deltaPositionX < 0) {
-                    turnBack();
-                }
-                continueMove(Math.abs(deltaPositionX));
-                break;
-            case WEST:
-                if (deltaPositionX > 0) {
-                    turnBack();
-                }
-                continueMove(Math.abs(deltaPositionX));
-                break;
-        }
-        return state;
     }
 
     @Getter

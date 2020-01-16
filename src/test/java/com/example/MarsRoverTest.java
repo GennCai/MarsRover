@@ -66,44 +66,4 @@ public class MarsRoverTest {
         Assert.assertEquals(Direction.WEST, nRoverState.getDirection());
         Assert.assertEquals(Direction.EAST, sRoverState.getDirection());
     }
-
-    @Test
-    public void move_straight_line_test() {
-        MarsRover marsRover;
-        RoverState roverState;
-
-        marsRover = new MarsRover(new RoverState(3, 5, Direction.SOUTH));
-
-        marsRover.clearInstructions();
-        roverState = marsRover.moveTo(new Position(3, 3));
-        Assert.assertEquals(new RoverState(3, 3, Direction.SOUTH), roverState);
-        Assert.assertEquals("MM", marsRover.showInstructions());
-
-        marsRover.clearInstructions();
-        roverState = marsRover.moveTo(new Position(3, 5));
-        Assert.assertEquals(new RoverState(3, 5, Direction.NORTH), roverState);
-        Assert.assertEquals("RRMM", marsRover.showInstructions());
-
-        marsRover = new MarsRover(new RoverState(3, 5, Direction.WEST));
-
-        marsRover.clearInstructions();
-        roverState = marsRover.moveTo(new Position(6, 5));
-        Assert.assertEquals(new RoverState(6, 5, Direction.EAST), roverState);
-        Assert.assertEquals("RRMMM", marsRover.showInstructions());
-
-        marsRover.clearInstructions();
-        roverState = marsRover.moveTo(new Position(7, 5));
-        Assert.assertEquals(new RoverState(7, 5, Direction.EAST), roverState);
-        Assert.assertEquals("M", marsRover.showInstructions());
-    }
-
-    @Test
-    public void move_non_straight_line_test() {
-        MarsRover marsRover;
-        RoverState roverState;
-
-        marsRover = new MarsRover(new RoverState(0, 0, Direction.NORTH));
-        roverState = marsRover.moveTo(new Position(2, 1));
-        Assert.assertEquals(new Position(2,1), roverState.getPosition());
-    }
 }
