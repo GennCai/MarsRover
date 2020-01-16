@@ -1,5 +1,6 @@
 package com.example;
 
+import javafx.geometry.Pos;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -94,5 +95,15 @@ public class MarsRoverTest {
         roverState = marsRover.moveTo(new Position(7, 5));
         Assert.assertEquals(new RoverState(7, 5, Direction.EAST), roverState);
         Assert.assertEquals("M", marsRover.showInstructions());
+    }
+
+    @Test
+    public void move_non_straight_line_test() {
+        MarsRover marsRover;
+        RoverState roverState;
+
+        marsRover = new MarsRover(new RoverState(0, 0, Direction.NORTH));
+        roverState = marsRover.moveTo(new Position(2, 1));
+        Assert.assertEquals(new Position(2,1), roverState.getPosition());
     }
 }
