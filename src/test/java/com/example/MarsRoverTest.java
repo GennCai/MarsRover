@@ -1,83 +1,40 @@
 package com.example;
 
+import com.example.command.Move;
+import com.example.command.TurnLeft;
+import com.example.command.TurnRight;
+import com.example.direction.DirectionValue;
 import org.junit.Assert;
 import org.junit.Test;
 
-import static com.example.MarsRover.Position;
-import static com.example.MarsRover.Direction;
-import static com.example.MarsRover.RoverState;
-
 public class MarsRoverTest {
-    
-    @Test
-    public void construct_test() {
-        MarsRover marsRover = new MarsRover( new RoverState(3, 5, Direction.SOUTH));
-        Assert.assertEquals(new RoverState(3, 5, Direction.SOUTH), marsRover.getState());
-    }
+    MarsRover marsRover;
+    RoverStatus status;
 
     @Test
-    public void move_method_test() {
-        MarsRover northRover = new MarsRover(new RoverState(3, 5, Direction.NORTH));
-        MarsRover southRover = new MarsRover(new RoverState(3, 5, Direction.SOUTH));
-        MarsRover eastRover = new MarsRover(new RoverState(3, 5, Direction.EAST));
-        MarsRover westRover = new MarsRover(new RoverState(3, 5, Direction.WEST));
-        RoverState nRoverState = northRover.move();
-        RoverState sRoverState = southRover.move();
-        RoverState eRoverState = eastRover.move();
-        RoverState wRoverState = westRover.move();
+    public void basic_test() {
+        status = new RoverStatus(0, 0, DirectionValue.NORTH);
+        marsRover = new MarsRover(status);
+        marsRover.executeCommand(new Move());
+        Assert.assertEquals(status.getY(), 1);
 
-        Assert.assertEquals(new RoverState(3, 6, Direction.NORTH), nRoverState);
-        Assert.assertEquals(new RoverState(3, 4, Direction.SOUTH), sRoverState);
-        Assert.assertEquals(new RoverState(4, 5, Direction.EAST), eRoverState);
-        Assert.assertEquals(new RoverState(2, 5, Direction.WEST), wRoverState);
-    }
+        marsRover.executeCommand(new TurnRight());
+        Assert.assertEquals(status.getFacing(), DirectionValue.EAST);
 
-    @Test
-    public void turn_right_method_test() {
-        MarsRover northRover = new MarsRover(new RoverState(3, 5, Direction.NORTH));
-        MarsRover southRover = new MarsRover(new RoverState(3, 5, Direction.SOUTH));
-        MarsRover eastRover = new MarsRover(new RoverState(3, 5, Direction.EAST));
-        MarsRover westRover = new MarsRover(new RoverState(3, 5, Direction.WEST));
-        RoverState nRoverState = northRover.turnRight();
-        RoverState sRoverState = southRover.turnRight();
-        RoverState eRoverState = eastRover.turnRight();
-        RoverState wRoverState = westRover.turnRight();
+        marsRover.executeCommand(new Move());
+        Assert.assertEquals(status.getX(), 1);
 
-        Assert.assertEquals(Direction.NORTH, wRoverState.getDirection());
-        Assert.assertEquals(Direction.SOUTH, eRoverState.getDirection());
-        Assert.assertEquals(Direction.EAST, nRoverState.getDirection());
-        Assert.assertEquals(Direction.WEST, sRoverState.getDirection());
-    }
+        marsRover.executeCommand(new TurnLeft());
+        Assert.assertEquals(status.getFacing(), DirectionValue.NORTH);
 
-    @Test
-    public void turn_left_method_test() {
-        MarsRover northRover = new MarsRover(new RoverState(3, 5, Direction.NORTH));
-        MarsRover southRover = new MarsRover(new RoverState(3, 5, Direction.SOUTH));
-        MarsRover eastRover = new MarsRover(new RoverState(3, 5, Direction.EAST));
-        MarsRover westRover = new MarsRover(new RoverState(3, 5, Direction.WEST));
-        RoverState nRoverState = northRover.turnLeft();
-        RoverState sRoverState = southRover.turnLeft();
-        RoverState eRoverState = eastRover.turnLeft();
-        RoverState wRoverState = westRover.turnLeft();
+        marsRover.executeCommand(new Move());
+        Assert.assertEquals(status.getY(), 2);
 
-        Assert.assertEquals(Direction.SOUTH, wRoverState.getDirection());
-        Assert.assertEquals(Direction.NORTH, eRoverState.getDirection());
-        Assert.assertEquals(Direction.WEST, nRoverState.getDirection());
-        Assert.assertEquals(Direction.EAST, sRoverState.getDirection());
-    }
+        marsRover.executeCommand(new TurnLeft());
+        Assert.assertEquals(status.getFacing(), DirectionValue.WEST);
 
-    @Test
-    public void execute_instruction_method_test() {
-        MarsRover marsRover = new MarsRover(new RoverState(0, 0, Direction.NORTH));
-        String commands = "MMRMM";
-        RoverState roverState = marsRover.executeInstruction(commands);
-        Assert.assertEquals(commands, marsRover.showInstructions());
-        Assert.assertEquals(new RoverState(2, 2, Direction.EAST), roverState);
-
-        marsRover.clearInstructions();
-        commands = "RMMMLMMM";
-        roverState = marsRover.executeInstruction(commands);
-        Assert.assertEquals(commands, marsRover.showInstructions());
-        Assert.assertEquals(new RoverState(5, -1, Direction.EAST), roverState);
+        marsRover.executeCommand(new Move());
+        marsRover.executeCommand(new Move());
+        Assert.assertEquals(status.getX(), -1);
     }
 }
