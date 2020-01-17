@@ -1,6 +1,5 @@
 package com.example;
 
-import javafx.geometry.Pos;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -65,5 +64,20 @@ public class MarsRoverTest {
         Assert.assertEquals(Direction.NORTH, eRoverState.getDirection());
         Assert.assertEquals(Direction.WEST, nRoverState.getDirection());
         Assert.assertEquals(Direction.EAST, sRoverState.getDirection());
+    }
+
+    @Test
+    public void execute_instruction_method_test() {
+        MarsRover marsRover = new MarsRover(new RoverState(0, 0, Direction.NORTH));
+        String commands = "MMRMM";
+        RoverState roverState = marsRover.executeInstruction(commands);
+        Assert.assertEquals(commands, marsRover.showInstructions());
+        Assert.assertEquals(new RoverState(2, 2, Direction.EAST), roverState);
+
+        marsRover.clearInstructions();
+        commands = "RMMMLMMM";
+        roverState = marsRover.executeInstruction(commands);
+        Assert.assertEquals(commands, marsRover.showInstructions());
+        Assert.assertEquals(new RoverState(5, -1, Direction.EAST), roverState);
     }
 }

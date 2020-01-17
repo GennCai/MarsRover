@@ -23,6 +23,23 @@ public class MarsRover {
         this.state = state;
     }
 
+    public RoverState executeInstruction(String command) {
+        char[] instructions = command.toCharArray();
+        for (char instruction : instructions) {
+            switch (instruction) {
+                case 'M':
+                    move();
+                    break;
+                case 'R':
+                    turnRight();
+                    break;
+                case 'L':
+                    turnLeft();
+                    break;
+            }
+        }
+        return state;
+    }
 
     public RoverState move() {
         instruction.add("M");
